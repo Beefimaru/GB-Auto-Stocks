@@ -1,0 +1,40 @@
+import React, { useState } from "react"; import { Input } from "@/components/ui/input"; import { Card, CardContent } from "@/components/ui/card"; import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+
+const stockData = [ { outlet: "SELAYANG", model: "IRIZ 1.6 ACTIVE CVT MC3", color: "ARMOUR SILVER", chassis: "PL1BH6LTRSG091523", engine: "S4PHXR9258", year: "2024", price: "54,760.00" }, { outlet: "SELAYANG", model: "PERSONA 1.6 STANDARD CVT MC2", color: "JET GREY", chassis: "PL1BH6STRSG174586", engine: "S4PHXX4941", year: "2024", price: "45,810.00" }, { outlet: "SELAYANG", model: "PERSONA 1.6 STANDARD CVT MC2", color: "ARMOUR SILVER", chassis: "PL1BH6STRSG174727", engine: "S4PHXX5188", year: "2024", price: "45,810.00" } ];
+
+export default function StockViewer() { const [search, setSearch] = useState("");
+
+const filteredData = stockData.filter(item => Object.values(item).some(val => val.toLowerCase().includes(search.toLowerCase()) ) );
+
+return ( <div className="p-4"> <Card className="mb-4"> <CardContent> <h1 className="text-xl font-bold mb-2">Stock Viewer</h1> <Input placeholder="Search by outlet, model, color, chassis, etc." value={search} onChange={e => setSearch(e.target.value)} /> </CardContent> </Card>
+
+<Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Outlet</TableHead>
+        <TableHead>Model</TableHead>
+        <TableHead>Color</TableHead>
+        <TableHead>Chassis</TableHead>
+        <TableHead>Engine</TableHead>
+        <TableHead>Year</TableHead>
+        <TableHead>Price (RM)</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {filteredData.map((item, index) => (
+        <TableRow key={index}>
+          <TableCell>{item.outlet}</TableCell>
+          <TableCell>{item.model}</TableCell>
+          <TableCell>{item.color}</TableCell>
+          <TableCell>{item.chassis}</TableCell>
+          <TableCell>{item.engine}</TableCell>
+          <TableCell>{item.year}</TableCell>
+          <TableCell>{item.price}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</div>
+
+); }
+
